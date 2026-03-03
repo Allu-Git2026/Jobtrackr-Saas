@@ -1,0 +1,20 @@
+# Node
+node_modules
+dist
+
+# Environment files
+.env
+.env.*
+server/.env
+client/.env
+
+# Prisma
+.prisma
+
+# Mac
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
