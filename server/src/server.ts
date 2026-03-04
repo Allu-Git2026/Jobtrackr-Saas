@@ -37,7 +37,10 @@ const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
 
 app.use(
   cors({
-    origin: clientUrl,
+    origin: [
+      "http://localhost:5173",
+      "https://jobtrackr-client.vercel.app"
+    ],
     credentials: true,
   })
 );
