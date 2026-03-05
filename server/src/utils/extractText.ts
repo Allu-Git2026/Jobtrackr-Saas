@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import mammoth from "mammoth";
 
 // ✅ Fix: use require to avoid TS “no call signatures”

@@ -1,3 +1,4 @@
+import type { Request, Response } from "express";
 import express from "express";
 import cors from "cors";
 import passport from "passport";
@@ -27,7 +28,7 @@ app.use("/api/applications", applicationsRoutes);
 // if you have separate match routes file, keep this (otherwise remove)
 app.use("/api/applications", matchRoutes);
 
-app.get("/api/health", (_req, res) => res.json({ ok: true }));
+app.get("/api/health", (_req: Request, res: Response) => res.json({ ok: true }));
 
 app.listen(5001, () => {
   console.log("JobTrackr API running on http://localhost:5001");

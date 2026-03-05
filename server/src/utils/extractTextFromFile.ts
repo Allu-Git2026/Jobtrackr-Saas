@@ -1,9 +1,12 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import mammoth from "mammoth";
+
 
 // pdf-parse for TS
 const pdfParse = require("pdf-parse");
+
+
 
 export async function extractTextFromFile(
   filePath: string,
