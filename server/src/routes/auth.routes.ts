@@ -7,7 +7,8 @@ import { prisma } from "../prisma";
 const router = Router();
 
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
-const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+const CLIENT_URL =
+  "https://jobtrackrsaas-chaitanya-allus-projects-1f8b497a.vercel.app";
 
 // helper
 function signToken(userId: string) {
