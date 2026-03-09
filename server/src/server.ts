@@ -21,6 +21,10 @@ app.use(
 app.use(express.json());
 app.use(passport.initialize());
 
+app.get("/health", (_req, res) => {
+  res.json({ ok: true });
+});
+
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/applications", applicationsRoutes);
