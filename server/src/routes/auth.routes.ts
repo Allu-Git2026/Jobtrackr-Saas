@@ -127,7 +127,8 @@ router.get(
 
       console.log("OAuth redirect CLIENT_URL =", CLIENT_URL);
       console.log("OAuth redirect final URL =", `${CLIENT_URL}/oauth-success?token=${token}`);
-
+      
+      console.log("CLIENT_URL used for redirect:", CLIENT_URL);
       return res.redirect(`${CLIENT_URL}/oauth-success?token=${token}`);
     } catch (e: any) {
       console.error("Google callback error:", e);
