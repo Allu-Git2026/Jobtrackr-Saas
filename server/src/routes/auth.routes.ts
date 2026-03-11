@@ -118,7 +118,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: `${CLIENT_URL}/login`,
+    failureRedirect: `${CLIENT_URL}/#/login`,
   }),
   async (req: any, res) => {
     try {
@@ -127,9 +127,9 @@ router.get(
 
       console.log("OAuth redirect CLIENT_URL =", CLIENT_URL);
       console.log("OAuth redirect final URL =", `${CLIENT_URL}/oauth-success?token=${token}`);
-      
+
       console.log("CLIENT_URL used for redirect:", CLIENT_URL);
-      return res.redirect(`${CLIENT_URL}/oauth-success?token=${token}`);
+      return res.redirect(`${CLIENT_URL}/#/oauth-success?token=${token}`);
     } catch (e: any) {
       console.error("Google callback error:", e);
       return res.redirect(`${CLIENT_URL}/login`);
