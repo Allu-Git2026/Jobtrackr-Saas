@@ -31,7 +31,7 @@ export default function Login() {
         });
 
         localStorage.setItem("token", res.data.token);
-        window.location.href = "/applications";
+        window.location.href = "/#/applications";
         return;
       }
 
@@ -41,7 +41,7 @@ export default function Login() {
       });
 
       localStorage.setItem("token", res.data.token);
-      window.location.href = "/applications";
+      window.location.href = "/#/applications";
     } catch (err: any) {
       setError(err?.response?.data?.message || "Something went wrong");
     } finally {

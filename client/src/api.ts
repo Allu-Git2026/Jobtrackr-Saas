@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const base = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
 export const api = axios.create({
@@ -17,7 +18,7 @@ api.interceptors.response.use(
   (err) => {
     if (err.response?.status === 401) {
       localStorage.removeItem("token");
-      window.location.href = "/login";
+      window.location.href = "/#/login";
     }
     return Promise.reject(err);
   }
