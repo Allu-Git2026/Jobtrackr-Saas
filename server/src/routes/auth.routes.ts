@@ -7,14 +7,16 @@ import { prisma } from "../prisma";
 const router = Router();
 
 const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
-const CLIENT_URL = process.env.CLIENT_URL!;
+const CLIENT_URL = process.env.CLIENT_URL;
 
-// helper
+if (!CLIENT_URL) {
+  throw new Error("CLIENT_URL is missing in environment variables");
+}
+
 function signToken(userId: string) {
   return jwt.sign({ userId }, JWT_SECRET, { expiresIn: "7d" });
 }
 
-// REGISTER
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body as {
@@ -55,7 +57,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// LOGIN
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body as {
@@ -104,7 +105,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// GOOGLE LOGIN START
 router.get(
   "/google",
   passport.authenticate("google", {
@@ -113,7 +113,6 @@ router.get(
   })
 );
 
-// GOOGLE CALLBACK
 router.get(
   "/google/callback",
   passport.authenticate("google", {
@@ -125,8 +124,11 @@ router.get(
       const user = req.user;
       const token = signToken(user.id);
 
+      console.log("OAuth redirect target:", `${CLIENT_URL}/oauth-success?token=${token}`);
+
       return res.redirect(`${CLIENT_URL}/oauth-success?token=${token}`);
     } catch (e: any) {
+      console.error("Google callback error:", e);
       return res.redirect(`${CLIENT_URL}/login`);
     }
   }
