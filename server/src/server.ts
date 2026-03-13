@@ -3,49 +3,44 @@ import express from "express";
 import cors from "cors";
 import passport from "passport";
 
-import "./auth/passport"; // ✅ IMPORTANT: initializes Google strategy
+import "./auth/passport";
 
 import authRoutes from "./routes/auth.routes";
 import applicationsRoutes from "./routes/applications.routes";
-import matchRoutes from "./routes/match.routes"; // if you have match-file route in separate file
+import matchRoutes from "./routes/match.routes";
 
 const app = express();
 
+const CLIENT_URL = process.env.CLIENT_URL;
+
+if (!CLIENT_URL) {
+  throw new Error("CLIENT_URL is missing in environment variables");
+}
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [CLIENT_URL, "http://localhost:5173"],
     credentials: true,
-  }),
+  })
 );
 
 app.use(express.json());
 app.use(passport.initialize());
 
-app.get("/health", (_req, res) => {
+app.get("/health", (_req: Request, res: Response) => {
   res.json({ ok: true });
 });
 
-// routes
-app.use("/api/auth", authRoutes);
-app.use("/api/applications", applicationsRoutes);
-
-// if you have separate match routes file, keep this (otherwise remove)
-app.use("/api/applications", matchRoutes);
-
-app.get("/api/health", (_req: Request, res: Response) => res.json({ ok: true }));
-
-app.listen(5001, () => {
-  console.log("JobTrackr API running on http://localhost:5001");
+app.get("/api/health", (_req: Request, res: Response) => {
+  res.json({ ok: true });
 });
 
-const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+app.use("/api/auth", authRoutes);
+app.use("/api/applications", applicationsRoutes);
+app.use("/api/applications", matchRoutes);
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://jobtrackr-client.vercel.app"
-    ],
-    credentials: true,
-  })
-);
+const PORT = Number(process.env.PORT) || 5001;
+
+app.listen(PORT, () => {
+  console.log(`JobTrackr API running on port ${PORT}`);
+});

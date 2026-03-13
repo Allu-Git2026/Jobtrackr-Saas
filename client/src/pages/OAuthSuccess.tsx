@@ -7,11 +7,11 @@ export default function OAuthSuccess() {
 
     if (token) {
       localStorage.setItem("token", token);
-      window.location.href = "/applications";
+      window.location.href = "/#/applications";
       return;
     }
 
-    window.location.href = "/login";
+    window.location.href = "/#/login";
   }, []);
 
   return (
